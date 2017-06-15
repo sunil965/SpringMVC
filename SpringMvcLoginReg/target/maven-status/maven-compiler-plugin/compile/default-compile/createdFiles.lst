@@ -1,0 +1,6 @@
+com/bridgeit/dao/UserDAOImpl.class
+com/bridgeit/service/UserServiceImpl.class
+com/bridgeit/service/UserService.class
+com/bridgeit/controller/ControllerClass.class
+com/bridgeit/dao/UserDAO.class
+com/bridgeit/model/UserRegistrationModel.class
