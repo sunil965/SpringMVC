@@ -31,12 +31,8 @@
 </tr>
 </table>
 <a href="users">Get Registered Users List</a>
+<span style="color: green">${msg2}</span>
 
-<%-- Name:<input type="text" name="name"><br><span></span><br>
-Email:<input type="email" name="email"><br><span style="color: red">${msg}</span><br>
-Contact:<input type="number" name="contact"><br><span></span><br>
-Password:<input type="text" name="password"><br><span></span><br>
-<input type="submit" value="Register"> --%>
 </form>
 </div>
 </body>

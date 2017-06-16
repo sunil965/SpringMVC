@@ -10,5 +10,10 @@ public interface UserDAO {
 
 	boolean existEmail(String email);
 
-	List getAllUsersList();
+	public List getAllUsersList();
+	
+	public List getUserbyId(int id);
+
+	void update(UserRegistrationModel u);
+
 }

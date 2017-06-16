@@ -10,6 +10,10 @@ public interface UserService {
 
 	boolean checkExistingEmail(String email);
 
-	List getAllUsers();
+	public List getAllUsers();
+	
+	public List getUserById(int id);
+	
+	public void update(UserRegistrationModel u);
 
 }

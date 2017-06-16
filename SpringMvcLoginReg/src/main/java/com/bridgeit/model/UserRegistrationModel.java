@@ -56,6 +56,9 @@ public class UserRegistrationModel {
 	public void setContact(long contact) {
 		this.contact = contact;
 	}
+	public UserRegistrationModel() {
+		
+	}
 	@Override
 	public String toString() {
 		return "UserRegistrationModel [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password

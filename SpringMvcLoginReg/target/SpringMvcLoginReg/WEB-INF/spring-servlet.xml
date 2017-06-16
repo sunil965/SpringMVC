@@ -14,17 +14,12 @@
   http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
 	<context:component-scan base-package="com.bridgeit" />
-
-
+	
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
-
-
-
-
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
@@ -35,7 +30,6 @@
 				<value>com.bridgeit.model.UserRegistrationModel</value>
 			</list>
 		</property>
-
 
 		<property name="hibernateProperties">
 			<props>
@@ -49,9 +43,9 @@
 	<bean name="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/abc" />
+		<property name="url" value="jdbc:mysql://localhost:3306/Todo" />
 		<property name="username" value="root" />
-		<property name="password" value="manoj" />
+		<property name="password" value="password" />
 	</bean>
 
  

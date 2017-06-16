@@ -31,4 +31,14 @@ public class UserServiceImpl implements UserService {
 		return daoObject.getAllUsersList();
 	}
 
+	@Override
+	public List getUserById(int id) {
+		return daoObject.getUserbyId(id);
+	}
+
+	@Override
+	public void update(UserRegistrationModel u) {
+		daoObject.update(u);
+	}
+
 }
