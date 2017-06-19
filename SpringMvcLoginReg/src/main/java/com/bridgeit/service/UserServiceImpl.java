@@ -10,7 +10,6 @@ import com.bridgeit.dao.UserDAO;
 import com.bridgeit.model.UserRegistrationModel;
 
 @Service
-@Component
 public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDAO daoObject;
@@ -39,6 +38,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void update(UserRegistrationModel u) {
 		daoObject.update(u);
+	}
+
+	public void deleteUser(int id) {
+		daoObject.deleteUser(id);
+	}
+
+	public List userLogin(String email, String pwd) {
+		return daoObject.loginUser(email, pwd);
 	}
 
 }

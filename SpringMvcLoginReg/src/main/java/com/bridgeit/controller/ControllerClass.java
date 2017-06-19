@@ -1,9 +1,13 @@
 package com.bridgeit.controller;
 
+import java.util.Iterator;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,25 +19,58 @@ import com.bridgeit.model.UserRegistrationModel;
 import com.bridgeit.service.UserServiceImpl;
 
 @Controller
-@RequestMapping(value = "/")
 public class ControllerClass {
 
 	@Autowired
 	UserServiceImpl userServiceImpl;
 
-	@RequestMapping(value = "")
+	@RequestMapping(value = "/")
 	public ModelAndView registeration() {
-		return new ModelAndView("registration");
+		ModelAndView mv = new ModelAndView("login");
+		return mv;
 	}
 
-	@RequestMapping(value = "register", method = RequestMethod.POST)
-	public ModelAndView insertIntoDb(UserRegistrationModel userRegistrationModel, @RequestParam String email) {
-		boolean result = userServiceImpl.checkExistingEmail(email);
-		if (result == true) {
-			return new ModelAndView("registration", "msg", "This email already exist !!!");
+	@RequestMapping("/login")
+	public ModelAndView login(UserRegistrationModel registrationModel) {
+
+		ModelAndView view = null;
+
+		List list = userServiceImpl.userLogin(registrationModel.getEmail(), registrationModel.getPassword());
+		if (list.size() != 0) {
+			Iterator userIterator = list.iterator();
+			while (userIterator.hasNext()) {
+				UserRegistrationModel u = (UserRegistrationModel) userIterator.next();
+				int id = u.getId();
+			}
+
+			view = new ModelAndView("registration", "registrationModel", new UserRegistrationModel());
+			return view;
+		}
+		view = new ModelAndView("login", "msg", "invalid credential.....");
+		return view;
+	}
+
+	@RequestMapping(value = "welcome")
+	public ModelAndView redirect() {
+		return new ModelAndView("registration","registrationModel", new UserRegistrationModel());
+	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public ModelAndView insertIntoDb(@ModelAttribute("registrationModel") @Valid UserRegistrationModel registrationModel, BindingResult res,
+			@RequestParam String email) {
+		System.out.println(res);
+		if (res.hasErrors()) {
+			return new ModelAndView("registration","registrationModel", registrationModel);
 		} else {
-			userServiceImpl.userRegistration(userRegistrationModel);
-			return new ModelAndView("registration", "msg2", "Registered Successfullly!!!");
+			boolean result = userServiceImpl.checkExistingEmail(email);
+			if (result == true) {
+				return new ModelAndView("registration", "msg", "This email already exist !!!");
+			} else {
+				userServiceImpl.userRegistration(registrationModel);
+				ModelAndView mv=new ModelAndView("redirect:users");
+				//mv.addObject("msg2","Registration successfull......");
+				return mv;
+			}
 		}
 	}
 
@@ -44,20 +81,21 @@ public class ControllerClass {
 	}
 
 	@RequestMapping(value = "/edit/{id}")
-	public ModelAndView find(@PathVariable int id) {
+	public ModelAndView find(@PathVariable("id") int id) {
+		System.out.println(id);
 		List u = userServiceImpl.getUserById(id);
 		return new ModelAndView("editform", "users", u);
 	}
 
-	@RequestMapping(value = "/editsave", method = RequestMethod.POST)
-	public ModelAndView editSave(@ModelAttribute("u") UserRegistrationModel u) {
-		System.out.println(u.getId());
-		System.out.println(u.getName());
-		System.out.println(u.getContact());
-		System.out.println(u.getEmail());
-		System.out.println(u.getPassword());
-
+	@RequestMapping(value = "/editsave")
+	public ModelAndView editSave(UserRegistrationModel u) {
 		userServiceImpl.update(u);
+		return new ModelAndView("redirect:users");
+	}
+
+	@RequestMapping(value = "/delete")
+	public ModelAndView delete(@RequestParam("id") int id) {
+		userServiceImpl.deleteUser(id);
 		return new ModelAndView("redirect:users");
 	}
 }

@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Userlist</title>
 </head>
 <body>
 
@@ -33,12 +33,12 @@
 						<td><c:out value="${list.email }"></c:out></td>
 						<td><c:out value="${list.password }"></c:out></td>
 						<td><a href="edit/${list.id}">Edit</a></td>
-						<td><a href="delete/${list.id}">Delete</a></td>
+						<td><a href="delete?id=${list.id}">Delete</a></td>
 					</tr>
 				</c:forEach>
 			</table>
 		</c:if>
-		
+		<a href="welcome">Add More</a>
 	</div>
 </body>
 </html>

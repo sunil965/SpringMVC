@@ -15,5 +15,9 @@ public interface UserService {
 	public List getUserById(int id);
 	
 	public void update(UserRegistrationModel u);
+	
+	public void deleteUser(int id);
+	
+	public List userLogin(String email, String pwd);
 
 }

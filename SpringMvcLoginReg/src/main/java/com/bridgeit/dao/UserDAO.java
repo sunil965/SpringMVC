@@ -16,4 +16,8 @@ public interface UserDAO {
 
 	void update(UserRegistrationModel u);
 
+	void deleteUser(int id);
+
+	List loginUser(String email, String pwd);
+
 }

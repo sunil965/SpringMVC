@@ -8,11 +8,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<c:url value="/" var="base"></c:url>
 </head>
 <body>
 	<div align="center">
 		<h1>Edit User Details</h1>
-		<form action="editsave" method="post">
+		
+		<form action="${base}editsave" method="post">
 			<table>
 				<c:forEach items="${users}" var="list">
 				<tr>

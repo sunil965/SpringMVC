@@ -2,27 +2,26 @@ package com.bridgeit.dao;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgeit.model.UserRegistrationModel;
 
 @Repository
-@Component
 @Transactional
 public class UserDAOImpl implements UserDAO {
 
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
 	public void save(UserRegistrationModel user) {
+		/*Session session = sessionFactory.getCurrentSession();
+		session.save(user);*/
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		session.save(user);
@@ -31,6 +30,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public boolean existEmail(String email) {
+//		Session session = sessionFactory.getCurrentSession();
 		Session session = sessionFactory.openSession();
 		String sql = "from UserRegistrationModel u where  u.email=:email";
 		Query query = session.createQuery(sql);
@@ -47,6 +47,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List getAllUsersList() {
+//		Session session = sessionFactory.getCurrentSession();
 		Session session = sessionFactory.openSession();
 		List userList = session.createQuery("from UserRegistrationModel").list();
 		session.close();
@@ -55,6 +56,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List getUserbyId(int id) {
+//		Session session = sessionFactory.getCurrentSession();
 		Session session = sessionFactory.openSession();
 		String query = "from UserRegistrationModel where id=" + id;
 		Query query1 = session.createQuery(query);
@@ -65,6 +67,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void update(UserRegistrationModel u) {
+//		Session session = sessionFactory.getCurrentSession();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		session.update(u);
@@ -72,6 +75,30 @@ public class UserDAOImpl implements UserDAO {
 		Query query = session.createQuery(q);
 		query.executeUpdate();*/
 		session.getTransaction().commit();
+		session.close();
+	}
+
+	@Override
+	public void deleteUser(int id) {
+//		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		Query query = session.createQuery("delete from UserRegistrationModel where id="+id);
+		query.executeUpdate();
+		transaction.commit();
+		session.close();
+	}
+
+	@Override
+	public List loginUser(String email, String pwd) {
+//		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
+		String qry="from UserRegistrationModel where email=:email and password=:pwd";
+	    Query query=session.createQuery(qry);
+		query.setParameter("email", email);
+	    query.setParameter("pwd", pwd);
+	    List list=query.list();
+    	return list;
 	}
 
 }
