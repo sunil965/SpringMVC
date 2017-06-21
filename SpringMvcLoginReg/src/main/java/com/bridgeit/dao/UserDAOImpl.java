@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bridgeit.model.UserRegistrationModel;
 
 @Repository
-@Transactional
+//@Transactional
 public class UserDAOImpl implements UserDAO {
 
 	@Autowired
@@ -46,10 +46,10 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List getAllUsersList() {
+	public List<UserRegistrationModel> getAllUsersList() {
 //		Session session = sessionFactory.getCurrentSession();
 		Session session = sessionFactory.openSession();
-		List userList = session.createQuery("from UserRegistrationModel").list();
+		List<UserRegistrationModel> userList = session.createQuery("from UserRegistrationModel").list();
 		session.close();
 		return userList;
 	}
@@ -90,14 +90,14 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List loginUser(String email, String pwd) {
+	public List<UserRegistrationModel> loginUser(String email, String pwd) {
 //		Session session = sessionFactory.getCurrentSession();
 		Session session = sessionFactory.openSession();
 		String qry="from UserRegistrationModel where email=:email and password=:pwd";
 	    Query query=session.createQuery(qry);
 		query.setParameter("email", email);
 	    query.setParameter("pwd", pwd);
-	    List list=query.list();
+	    List<UserRegistrationModel> list=query.list();
     	return list;
 	}
 

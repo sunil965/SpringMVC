@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,8 @@ import com.bridgeit.service.UserServiceImpl;
 
 @Controller
 public class ControllerClass {
+	// Instantiating log4j
+	private static final Logger logger = Logger.getLogger(ControllerClass.class);
 
 	@Autowired
 	UserServiceImpl userServiceImpl;
@@ -58,7 +61,13 @@ public class ControllerClass {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ModelAndView insertIntoDb(@ModelAttribute("registrationModel") @Valid UserRegistrationModel registrationModel, BindingResult res,
 			@RequestParam String email) {
-		System.out.println(res);
+		
+		if(logger.isDebugEnabled()){
+			logger.debug("registration is executed! by log4j");
+		}
+		logger.error("This is Error message", new Exception("Testing"));
+
+//		System.out.println(res);
 		if (res.hasErrors()) {
 			return new ModelAndView("registration","registrationModel", registrationModel);
 		} else {
