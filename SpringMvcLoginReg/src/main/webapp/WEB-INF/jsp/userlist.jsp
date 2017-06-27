@@ -38,7 +38,7 @@
 				</c:forEach>
 			</table>
 		</c:if>
-		<a href="welcome">Add More</a>
+		<a href="addmore">Add More</a>
 	</div>
 </body>
 </html>

@@ -4,37 +4,38 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgeit.dao.UserDAO;
 import com.bridgeit.model.UserRegistrationModel;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
+	
 	@Autowired
 	UserDAO daoObject;
 
-	@Override
 	public void userRegistration(UserRegistrationModel user) {
 		daoObject.save(user);
 	}
 
-	@Override
+	@Transactional(readOnly=true)
 	public boolean checkExistingEmail(String email) {
 		boolean result = daoObject.existEmail(email);
 		return result;
 	}
 
-	@Override
+	@Transactional(readOnly=true)
 	public List getAllUsers() {
 		return daoObject.getAllUsersList();
 	}
 
-	@Override
+	@Transactional(readOnly=true)
 	public List getUserById(int id) {
 		return daoObject.getUserbyId(id);
 	}
 
-	@Override
 	public void update(UserRegistrationModel u) {
 		daoObject.update(u);
 	}
@@ -43,6 +44,7 @@ public class UserServiceImpl implements UserService {
 		daoObject.deleteUser(id);
 	}
 
+	@Transactional(readOnly=false)
 	public List userLogin(String email, String pwd) {
 		return daoObject.loginUser(email, pwd);
 	}

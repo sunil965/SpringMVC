@@ -7,6 +7,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>registration</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	var email = $("#email").val();
+	$.ajax()
+});
+
+</script>
 
 <style type="text/css">
 #color {
@@ -24,13 +33,13 @@
 				</tr> -->
 				<tr>
 					<td>Name :</td>
-					<td><form:input path="name" /></td>
+					<td><form:input path="name"/></td>
 					<td id="color"><form:errors path="name" /></td>
 
 				</tr>
 				<tr>
 					<td>Email :</td>
-					<td><form:input path="email" /><br> <span
+					<td><form:input path="email" id="emailid"/><br> <span
 						style="color: red">${msg}</span></td>
 					<td id="color"><form:errors path="email" /></td>
 
@@ -43,7 +52,7 @@
 				</tr>
 				<tr>
 					<td>Password :</td>
-					<td><form:input path="password" /></td>
+					<td><form:password path="password" /></td>
 					<td id="color"><form:errors path="password" /></td>
 
 				</tr>
